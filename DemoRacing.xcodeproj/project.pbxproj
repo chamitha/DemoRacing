@@ -106,6 +106,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				28FD38542CC86E2700B06D34 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				28FD38272CC86DDF00B06D34 /* DemoRacing */,
@@ -195,6 +196,9 @@
 			);
 			mainGroup = 28FD381C2CC86DDF00B06D34;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				28FD38522CC86E1300B06D34 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 28FD38262CC86DDF00B06D34 /* Products */;
 			projectDirPath = "";
@@ -265,6 +269,10 @@
 			isa = PBXTargetDependency;
 			target = 28FD38242CC86DDF00B06D34 /* DemoRacing */;
 			targetProxy = 28FD38402CC86DE100B06D34 /* PBXContainerItemProxy */;
+		};
+		28FD38542CC86E2700B06D34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 28FD38532CC86E2700B06D34 /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -396,6 +404,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DemoRacing/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -424,6 +433,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DemoRacing/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -552,6 +562,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		28FD38522CC86E1300B06D34 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = exactVersion;
+				version = 0.57.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28FD38532CC86E2700B06D34 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28FD38522CC86E1300B06D34 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 28FD381D2CC86DDF00B06D34 /* Project object */;
 }
