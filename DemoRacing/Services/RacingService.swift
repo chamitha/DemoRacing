@@ -7,46 +7,44 @@
 
 import Foundation
 
-struct RacingService {
+protocol RacingServiceProtocol {
 
-    enum Method: String, CaseIterable {
-        case nextRaces = "nextraces"
-    }
-
-    private let session: Session
-
-    init(session: Session = URLSession.shared) {
-        self.session = session
-    }
-
-    func fetchNextRaces(_ count: Int = 10) async throws -> [RaceSummary] {
-        guard let url = Endpoint.racing(method: Method.nextRaces, count: count).url else {
-            throw ServiceError.invalidURL
-        }
-
-        let (data, _) = try await session.data(from: url, delegate: nil)
-
-        let response = try JSONDecoder().decode(NextRacesResponse.self, from: data)
-
-        guard response.status == 200 else {
-            throw ServiceError.serverError(statusCode: response.status)
-        }
-
-        return response.data.summaries.map { $0.value }
-    }
+    func fetchNextRacesByCategory(_ categories: Set<RaceSummary.Category>, count: Int) async throws -> [RaceSummary]
 
 }
 
-extension Endpoint {
+struct RacingService: RacingServiceProtocol {
 
-    static func racing(method: RacingService.Method, count: Int) -> Endpoint {
-        return Endpoint(
-            path: "/racing/",
-            queryItems: [
-                URLQueryItem(name: "method", value: method.rawValue),
-                URLQueryItem(name: "count", value: String(count))
-            ]
+    private let session: SessionProtocol
+
+    init(session: SessionProtocol = URLSession.shared) {
+        self.session = session
+    }
+
+    func fetchNextRacesByCategory(_ categories: Set<RaceSummary.Category>, count: Int) async throws -> [RaceSummary] {
+
+        guard let url = Endpoint.nextRaces(categories: Array(categories), count: count).url else {
+            throw ServiceError.invalidURL
+        }
+
+        let (data, _) = try await session.data(for:
+            URLRequest(
+                url: url,
+                headers: [
+                    .init(
+                        name: HTTPHeaderField.contentType,
+                        value: HTTPHeaderContentType.json
+                    )
+                ]
+            )
         )
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let response = try decoder.decode(NextRacesCategoryGroupResponse.self, from: data)
+
+        return response.summaries.map { $0.value }
     }
 
 }

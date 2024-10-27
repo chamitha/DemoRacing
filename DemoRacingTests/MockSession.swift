@@ -9,7 +9,7 @@ import Foundation
 
 @testable import DemoRacing
 
-class MockSession: Session {
+class MockSession: SessionProtocol {
 
     private let data: Result<Data, Error>
 
@@ -17,11 +17,8 @@ class MockSession: Session {
         self.data = data
     }
 
-    func data(
-        from url: URL,
-        delegate: URLSessionTaskDelegate?
-    ) async throws -> (Data, URLResponse) {
+    func data(for request: URLRequest) async throws -> (Data, URLResponse) {
         try (data.get(), URLResponse())
     }
-    
+
 }

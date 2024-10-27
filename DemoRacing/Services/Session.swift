@@ -7,8 +7,10 @@
 
 import Foundation
 
-protocol Session {
-    func data(from url: URL, delegate: URLSessionTaskDelegate?) async throws -> (Data, URLResponse)
+protocol SessionProtocol {
+
+    func data(for request: URLRequest) async throws -> (Data, URLResponse)
+
 }
 
-extension URLSession: Session {}
+extension URLSession: SessionProtocol {}

@@ -12,7 +12,7 @@ struct Endpoint {
     let path: String
     let queryItems: [URLQueryItem]
 
-    private let baseURL = "https://api.neds.com.au/rest/v1"
+    private let baseURL = "https://api.neds.com.au"
 
     var url: URL? {
         return URL(string: baseURL)?
