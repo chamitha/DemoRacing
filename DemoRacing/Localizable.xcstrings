@@ -1,0 +1,51 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ R%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ R%2$lld"
+          }
+        }
+      }
+    },
+    "%@. %@ Race %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@. %2$@ Race %3$lld"
+          }
+        }
+      }
+    },
+    "%@. %@ Race %lld. Starting %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@. %2$@ Race %3$lld. Starting %4$@"
+          }
+        }
+      }
+    },
+    "Greyhounds" : {
+
+    },
+    "Harness" : {
+
+    },
+    "Horses" : {
+
+    },
+    "Next To Go Racing" : {
+
+    },
+    "Retry" : {
+
+    }
+  },
+  "version" : "1.0"
+}
