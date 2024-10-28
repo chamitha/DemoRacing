@@ -22,7 +22,6 @@ struct RacingService: RacingServiceProtocol {
     }
 
     func fetchNextRacesByCategory(_ categories: Set<RaceSummary.Category>, count: Int) async throws -> [RaceSummary] {
-
         guard let url = Endpoint.nextRaces(categories: Array(categories), count: count).url else {
             throw ServiceError.invalidURL
         }
