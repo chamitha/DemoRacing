@@ -154,6 +154,4 @@ extension Array where Element == RaceSummary {
         }
     }
 
-    
-
 }
