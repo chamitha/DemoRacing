@@ -22,7 +22,7 @@ class NextRacesViewModel: ObservableObject {
     private static let maxRaceCount = 5
 
     // The number of seconds after the race start that the race remains displayed
-    private static let raceExpiryInterval = Duration.seconds(-60)
+    private static let raceExpiryInterval: TimeInterval = -60
 
     // MARK: Published
     @Published private(set) var isLoading = false
@@ -142,16 +142,18 @@ extension RaceSummary: Comparable {
 
 extension Array where Element == RaceSummary {
 
-    func hasExpiredRaces(startDate: Date, expiryInterval: Duration) -> Bool {
+    func hasExpiredRaces(startDate: Date, expiryInterval: TimeInterval) -> Bool {
         self.contains {
-            Duration.seconds($0.startDate.timeIntervalSinceNow) < expiryInterval
+            $0.startDate < startDate.addingTimeInterval(expiryInterval)
         }
     }
 
-    func upcomingRaces(startDate: Date, expiryInterval: Duration) -> [RaceSummary] {
+    func upcomingRaces(startDate: Date, expiryInterval: TimeInterval) -> [RaceSummary] {
         self.filter {
-            Duration.seconds($0.startDate.timeIntervalSinceNow) > expiryInterval
+            $0.startDate > startDate.addingTimeInterval(expiryInterval)
         }
     }
+
+    
 
 }
