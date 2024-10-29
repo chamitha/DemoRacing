@@ -17,7 +17,11 @@ struct NextRaceRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: race.imageName)
+            Image(race.imageName)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 32, height: 32)
             Text(race.title)
             Spacer()
             if let formattedStartDate {

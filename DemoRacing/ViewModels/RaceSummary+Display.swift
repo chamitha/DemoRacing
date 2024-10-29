@@ -10,14 +10,7 @@ import Foundation
 extension RaceSummary {
 
     var imageName: String {
-        return switch category {
-        case .greyhound:
-            "play"
-        case .harness:
-            "pause"
-        case .horse:
-            "stop"
-        }
+        category.imageName
     }
 
     var title: String {
@@ -53,6 +46,17 @@ extension RaceSummary.Category {
             String(localized: "Harness")
         case .horse:
             String(localized: "Horses")
+        }
+    }
+
+    var imageName: String {
+        return switch self {
+        case .greyhound:
+            "greyhound"
+        case .harness:
+            "harness"
+        case .horse:
+            "horse"
         }
     }
 

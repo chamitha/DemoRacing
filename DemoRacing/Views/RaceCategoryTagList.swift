@@ -33,8 +33,13 @@ struct RaceCategoryTagList: View {
                     selectedCategories.insert(category)
                 }
             } label: {
+                Image(category.imageName)
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
                 Text(category.title)
-                    .fontWeight(.medium)
+                    .font(.caption)
             }
             .buttonStyle(.borderedProminent)
             .foregroundStyle(selectedCategories.contains(category) ? .white : .gray)
