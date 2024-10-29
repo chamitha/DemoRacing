@@ -33,9 +33,7 @@ struct RaceSummaryDisplayTests {
             startDate: Date.now.addingTimeInterval(120)
         )
 
-        print(raceSummary.accessibilityLabel)
-
-        #expect(try /Horses. Mildura Race 1. Starting \w+ minute, [\w-]+ seconds/.wholeMatch(in: raceSummary.accessibilityLabel) != nil)
+        #expect(try /Horses. Mildura Race 1, in \w+ minutes/.wholeMatch(in: raceSummary.accessibilityLabel) != nil)
     }
 
     @Test(arguments: [
@@ -73,10 +71,10 @@ struct RaceSummaryDisplayTests {
             raceNumber: 1,
             meetingName: "Mildura",
             category: .horse,
-            startDate: Date.now.addingTimeInterval(120)
+            startDate: Date.now.addingTimeInterval(30)
         )
 
-        #expect(try /\d+m \d+s./.wholeMatch(in: #require(raceSummary.formattedStartDate)) != nil)
+        #expect(raceSummary.formattedStartDate == "in 30 secs")
     }
 
     @Test func formattedStartDateMinutes() async throws {
@@ -85,10 +83,10 @@ struct RaceSummaryDisplayTests {
             raceNumber: 1,
             meetingName: "Mildura",
             category: .horse,
-            startDate: Date.now.addingTimeInterval(360)
+            startDate: Date.now.addingTimeInterval(300)
         )
 
-        #expect(raceSummary.formattedStartDate == "5m")
+        #expect(raceSummary.formattedStartDate == "in 5 mins")
     }
 
 }

@@ -22,7 +22,6 @@ struct NextRaceRow: View {
             Spacer()
             if let formattedStartDate {
                 Text(formattedStartDate)
-                    .fontWeight(.medium)
                     .foregroundStyle(race.isStarting ? .red : .primary)
             }
         }

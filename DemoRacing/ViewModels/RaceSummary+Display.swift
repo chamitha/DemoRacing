@@ -25,14 +25,8 @@ extension RaceSummary {
     }
 
     var accessibilityLabel: String {
-        guard let startDate = dateFormatter(unitsStyle: .spellOut).string(from: startDate.timeIntervalSinceNow) else {
-            return String(
-                localized: "\(category.title). \(meetingName) Race \(raceNumber)"
-            )
-        }
-        return String(
-            localized: "\(category.title). \(meetingName) Race \(raceNumber). Starting \(startDate)"
-        )
+        let startDate = Date.RelativeFormatStyle(presentation: .named, unitsStyle: .spellOut).format(startDate)
+        return String(localized: "\(category.title). \(meetingName) Race \(raceNumber), \(startDate)")
     }
 
     var isStarting: Bool {
@@ -41,17 +35,10 @@ extension RaceSummary {
     }
 
     var formattedStartDate: String? {
-        dateFormatter().string(from: startDate.timeIntervalSinceNow)
-    }
-
-    private func dateFormatter(
-        unitsStyle: DateComponentsFormatter.UnitsStyle = .abbreviated
-    ) -> DateComponentsFormatter {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = unitsStyle
-        formatter.allowedUnits = isStarting ? [.minute, .second] : [.minute]
-        formatter.allowsFractionalUnits = false
-        return formatter
+        Date.RelativeFormatStyle(
+            presentation: .numeric,
+            unitsStyle: .abbreviated
+        ).format(startDate)
     }
 
 }
