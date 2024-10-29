@@ -15,8 +15,8 @@ Refer [Architecture](Architecture.md)
 
 ## Building and Running
 
-Open the `DemoRacing.xcodeproj` in Xcode
-Use the `DemoRacing` scheme to build the application and unit tests
+- Open the `DemoRacing.xcodeproj` in Xcode
+- Use the `DemoRacing` scheme to build the application and unit tests
 
 DemoRacing will launch the "Next To Go Racing" screen with the next 5 upcoming races.
 By default all race categories of greyhound, horse and harness are selected.
@@ -25,7 +25,7 @@ IMPROVEMENT: Save the selected categories in local persistant storage as it migh
 
 Tapping the category buttons will toggle the selected category and update the upcoming races.
 
-**Accessibility**
+### Accessibility
 
 The race category buttons will dynamically adjust from a horiontal to a vertical layout for large text sizes.
 
