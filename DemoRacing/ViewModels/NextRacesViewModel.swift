@@ -12,13 +12,10 @@ import OSLog
 @MainActor
 class NextRacesViewModel: ObservableObject {
 
-    struct ErrorViewModel {
-        let message: String
-    }
-
-    enum LoadingState {
+    enum LoadingState: Equatable {
         case loading
         case complete
+        case error(ErrorViewModel)
     }
 
     // The maximum number of races to display
@@ -32,7 +29,6 @@ class NextRacesViewModel: ObservableObject {
     @Published var allRaces: [RaceSummary] = []
     @Published private(set) var filteredRaces: [RaceSummary] = []
     @Published var selectedCategories: Set<RaceSummary.Category> = [.greyhound, .harness, .horse]
-    @Published private(set) var fooError: ErrorViewModel?
     @Published private(set) var loadingState: LoadingState = .complete
 
     // MARK: Private
@@ -67,7 +63,9 @@ class NextRacesViewModel: ObservableObject {
         $loadingState
             .combineLatest($filteredRaces)
             .map { loadingState, filteredRaces in
-                loadingState == .loading && filteredRaces.isEmpty
+                loadingState == .loading &&
+                // If there are races to display the fetch can be silent
+                filteredRaces.count < NextRacesViewModel.maxRaceCount
             }
             .removeDuplicates()
             .assign(to: &$isLoading)
@@ -77,7 +75,7 @@ class NextRacesViewModel: ObservableObject {
                 // If no races and no error then fetch more races
                 // If an error has occurred don't attempt to fetch races to prevent repeated failures
                 // The user can retry the fetch
-                if allRaces.isEmpty && fooError == nil {
+                if allRaces.isEmpty && loadingState == .complete {
                     fetchRaces(startDate: $0)
                     return
                 }
@@ -104,19 +102,16 @@ class NextRacesViewModel: ObservableObject {
         loadingState = .loading
 
         Task {
-            defer {
-                loadingState = .complete
-            }
             do {
                 logger.trace("Fetch next races")
-                fooError = nil
                 allRaces = try await service
                     .fetchNextRacesByCategory([.horse, .greyhound, .harness], count: 10)
                     .upcomingRaces(startDate: startDate, expiryInterval: NextRacesViewModel.raceExpiryInterval)
+                loadingState = .complete
                 logger.trace("Recieved next races: \(self.allRaces.count)")
             } catch {
                 logger.error("\(error.localizedDescription)")
-                fooError = ErrorViewModel(message: error.localizedDescription)
+                loadingState = .error(ErrorViewModel(error: error))
             }
         }
     }

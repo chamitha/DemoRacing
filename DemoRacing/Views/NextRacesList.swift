@@ -21,14 +21,16 @@ struct NextRacesList: View {
                 categories: [.greyhound, .harness, .horse],
                 selectedCategories: $viewModel.selectedCategories
             )
+            .padding()
             if viewModel.isLoading {
                 ProgressView()
+                    .padding()
             }
-            if let fooError = viewModel.fooError {
-                Text(fooError.message)
-                Button("Retry") {
+            if case let .error(error) = viewModel.loadingState {
+                ErrorRow(viewModel: error) {
                     viewModel.fetchRaces()
                 }
+                .padding()
             }
             List(viewModel.filteredRaces) {
                 NextRaceRow(race: $0, timer: timer)
